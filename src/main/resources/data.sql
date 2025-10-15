@@ -7,11 +7,22 @@ INSERT INTO tb_insumos (id, codigo, nome, descricao, quantidade_critica) VALUES 
 INSERT INTO tb_insumos (id, codigo, nome, descricao, quantidade_critica) VALUES (6, 'INS-006', 'Manteiga', 'Manteiga sem sal 200g', 6);
 
 -- Seeds para tb_usuarios (5 registros) - ids numéricos (Long)
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (1, 'Ana Silva', 'ana.silva@example.com', 'senha123', '11999990001');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (2, 'Bruno Costa', 'bruno.costa@example.com', 'senha123', '11999990002');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (3, 'Carla Pereira', 'carla.pereira@example.com', 'senha123', '11999990003');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (4, 'Diego Alves', 'diego.alves@example.com', 'senha123', '11999990004');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (5, 'Elisa Rocha', 'elisa.rocha@example.com', 'senha123', '11999990005');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (1, 'Ana Silva', 'ana.silva@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990001');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (2, 'Bruno Costa', 'bruno.costa@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990002');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (3, 'Carla Pereira', 'carla.pereira@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990003');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (4, 'Diego Alves', 'diego.alves@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990004');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (5, 'Elisa Rocha', 'elisa.rocha@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990005');
+
+-- Seeds para tb_roles
+INSERT INTO tb_roles (id, nome) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO tb_roles (id, nome) VALUES (2, 'ROLE_USER');
+
+-- Seeds para tb_usuarios_roles (mapeamento usuário -> role)
+INSERT INTO tb_usuarios_roles (id, user_id, role_id) VALUES (1, 1, 1); -- Ana Silva = ADMIN
+INSERT INTO tb_usuarios_roles (id, user_id, role_id) VALUES (2, 2, 2); -- Bruno = USER
+INSERT INTO tb_usuarios_roles (id, user_id, role_id) VALUES (3, 3, 2); -- Carla = USER
+INSERT INTO tb_usuarios_roles (id, user_id, role_id) VALUES (4, 4, 2); -- Diego = USER
+INSERT INTO tb_usuarios_roles (id, user_id, role_id) VALUES (5, 5, 2); -- Elisa = USER
 
 -- Seeds para tb_movimentacoes_insumos (>=20 registros)
 INSERT INTO tb_movimentacoes_insumos (id, quantidade, tipo_movimentacao, data, usuario_id, insumo_id) VALUES (1, 50, 'ENTRADA', '2025-09-01 08:30:00', 1, 1);

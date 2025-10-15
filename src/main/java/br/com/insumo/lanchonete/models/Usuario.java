@@ -1,6 +1,10 @@
 package br.com.insumo.lanchonete.models;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_usuarios")
-public class Usuario {
+public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,4 +42,22 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario")
     private List<MovimentacaoInsumo> movimentacoes;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<UsuarioRole> usuarioRoleList;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return usuarioRoleList;
+    }
+
+    @Override
+    public String getUsername(){
+        return this.email;
+    }
+
+    @Override
+    public String getPassword(){
+        return this.senha;
+    }
 }
