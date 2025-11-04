@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.insumo.lanchonete.dtos.MovimentacaoInsumoDto;
 import br.com.insumo.lanchonete.models.MovimentacaoInsumo;
 import br.com.insumo.lanchonete.services.MovimentacaoInsumoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/lanchonete/api/movimentacoes_insumos")
@@ -37,19 +39,22 @@ public class MovimentacaoInsumoController {
         return ResponseEntity.ok(toDto(service.findById(id)));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<MovimentacaoInsumoDto> create(@RequestBody MovimentacaoInsumoDto dto) {
+    public ResponseEntity<MovimentacaoInsumoDto> create(@Valid @RequestBody MovimentacaoInsumoDto dto) {
         MovimentacaoInsumo created = service.create(dto);
         return ResponseEntity.ok(toDto(created));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<MovimentacaoInsumoDto> update(@PathVariable Long id, @RequestBody MovimentacaoInsumoDto dto) {
+    public ResponseEntity<MovimentacaoInsumoDto> update(@PathVariable Long id, @Valid @RequestBody MovimentacaoInsumoDto dto) {
         dto.setId(id);
         MovimentacaoInsumo updated = service.update(dto);
         return ResponseEntity.ok(toDto(updated));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);

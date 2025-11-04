@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.insumo.lanchonete.dtos.InsumoDto;
 import br.com.insumo.lanchonete.models.Insumo;
 import br.com.insumo.lanchonete.services.InsumoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/lanchonete/api/insumos")
@@ -28,32 +29,32 @@ public class InsumoController {
         this.service = service;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<InsumoDto>> findAll() {
         return ResponseEntity.ok(service.findAll().stream().map(this::toDto).collect(Collectors.toList()));
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<InsumoDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(toDto(service.findById(id)));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<InsumoDto> create(@RequestBody InsumoDto dto) {
+    public ResponseEntity<InsumoDto> create(@Valid @RequestBody InsumoDto dto) {
         Insumo created = service.create(fromDto(dto));
         return ResponseEntity.ok(toDto(created));
     }
 
-    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<InsumoDto> update(@PathVariable Long id, @RequestBody InsumoDto dto) {
+    public ResponseEntity<InsumoDto> update(@PathVariable Long id, @Valid @RequestBody InsumoDto dto) {
         dto.setId(id);
         Insumo updated = service.update(fromDto(dto));
         return ResponseEntity.ok(toDto(updated));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
