@@ -31,4 +31,7 @@ public class InsumoDto {
     @Min(value = 0, message = "Quantidade crítica deve ser no mínimo 0")
     @JsonProperty(value = "quantidade_critica")
     private Integer quantidadeCritica;
+
+    @JsonProperty(value = "quantidade_estoque")
+    private Integer quantidadeEstoque;
 }

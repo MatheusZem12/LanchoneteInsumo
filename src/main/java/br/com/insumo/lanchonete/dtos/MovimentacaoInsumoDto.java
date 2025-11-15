@@ -29,14 +29,20 @@ public class MovimentacaoInsumoDto {
     private String tipoMovimentacao;
 
     @JsonProperty(value = "data")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime data;
 
-    @NotBlank(message = "ID do usuário é obrigatório")
+    @NotNull(message = "ID do usuário é obrigatório")
     @JsonProperty(value = "usuario_id")
-    private String usuarioId;
+    private Long usuarioId;
 
     @NotNull(message = "ID do insumo é obrigatório")
     @JsonProperty(value = "insumo_id")
     private Long insumoId;
+
+    @JsonProperty(value = "insumo_nome")
+    private String insumoNome;
+
+    @JsonProperty(value = "insumo_codigo")
+    private String insumoCodigo;
 }

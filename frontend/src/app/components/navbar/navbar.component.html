@@ -1,0 +1,14 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <span class="font-bold text-xl">Lanchonete Insumos</span>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <p-button 
+      icon="pi pi-sign-out" 
+      label="Sair" 
+      (onClick)="logout()"
+      severity="danger"
+      [text]="true">
+    </p-button>
+  </ng-template>
+</p-menubar>

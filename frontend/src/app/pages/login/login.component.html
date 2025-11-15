@@ -1,0 +1,59 @@
+<div class="flex align-items-center justify-content-center min-h-screen bg-primary-50" style="width: fit-content; margin: 0 auto;">
+  <p-card class="inline-block mx-auto p-6 login-card">
+        <ng-template pTemplate="header">
+          <div class="text-center pt-4">
+            <h2 class="m-0">Lanchonete Insumos</h2>
+            <p class="text-600 mt-2">Faça login para continuar</p>
+          </div>
+        </ng-template>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="flex flex-column gap-4">
+            <p-message 
+              *ngIf="errorMessage()" 
+              severity="error" 
+              [text]="errorMessage()">
+            </p-message>
+
+            <div class="flex flex-column gap-3">
+              <label htmlFor="username" class="font-semibold">Email</label>
+              <input 
+                pInputText 
+                id="username" 
+                formControlName="username"
+                placeholder="Digite seu email"
+                [class.ng-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" />
+              <small 
+                class="text-red-500" 
+                *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+                Email é obrigatório
+              </small>
+            </div>
+
+            <div class="flex flex-column gap-3">
+              <label htmlFor="password" class="font-semibold">Senha</label>
+              <input
+                pInputText
+                type="password"
+                id="password"
+                formControlName="password"
+                placeholder="Digite sua senha"
+                [class.ng-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" />
+              <small 
+                class="text-red-500" 
+                *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                Senha é obrigatória
+              </small>
+            </div>
+
+            <p-button 
+              type="submit" 
+              label="Entrar" 
+              icon="pi pi-sign-in"
+              [loading]="loading()"
+              [disabled]="loginForm.invalid">
+            </p-button>
+          </div>
+        </form>
+      </p-card>
+    </div>

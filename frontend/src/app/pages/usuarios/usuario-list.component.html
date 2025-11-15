@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+<app-toast></app-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-4">
+  <h1 class="text-3xl font-bold mb-4">Usuários</h1>
+  
+  <app-data-table
+    [data]="usuarios"
+    [columns]="columns"
+    [globalFilterFields]="['nome', 'email', 'telefone']"
+    [showAddButton]="isAdmin"
+    [showActions]="isAdmin"
+    (add)="openDialog()"
+    (edit)="openDialog($event)"
+    (delete)="confirmDelete($event)">
+  </app-data-table>
+</div>
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="editingUsuario ? 'Editar Usuário' : 'Novo Usuário'"
+  [modal]="true"
+  [style]="{width: '50vw'}"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <form [formGroup]="usuarioForm" (ngSubmit)="saveUsuario()">
+    <div class="flex flex-column gap-3">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="nome" class="font-semibold">Nome *</label>
+        <input 
+          pInputText 
+          id="nome" 
+          formControlName="nome"
+          placeholder="Digite o nome" />
+        <small 
+          class="text-red-500" 
+          *ngIf="usuarioForm.get('nome')?.invalid && usuarioForm.get('nome')?.touched">
+          Nome é obrigatório
+        </small>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label htmlFor="email" class="font-semibold">Email *</label>
+        <input 
+          pInputText 
+          id="email" 
+          type="email"
+          formControlName="email"
+          placeholder="Digite o email" />
+        <small 
+          class="text-red-500" 
+          *ngIf="usuarioForm.get('email')?.invalid && usuarioForm.get('email')?.touched">
+          Email válido é obrigatório
+        </small>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label htmlFor="telefone" class="font-semibold">Telefone</label>
+        <input 
+          pInputText 
+          id="telefone" 
+          formControlName="telefone"
+          placeholder="Digite o telefone" />
+      </div>
+
+      <div class="flex flex-column gap-2" *ngIf="!editingUsuario">
+        <label htmlFor="senha" class="font-semibold">Senha *</label>
+        <p-password 
+          id="senha" 
+          formControlName="senha"
+          placeholder="Digite a senha"
+          [toggleMask]="true"
+          [feedback]="true"
+          styleClass="w-full">
+        </p-password>
+        <small 
+          class="text-red-500" 
+          *ngIf="usuarioForm.get('senha')?.invalid && usuarioForm.get('senha')?.touched">
+          Senha é obrigatória (mínimo 6 caracteres)
+        </small>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label htmlFor="role" class="font-semibold">Perfil *</label>
+        <select
+          id="role"
+          formControlName="role"
+          class="p-inputtext p-component">
+          <option value="">Selecione o perfil</option>
+          <option value="ROLE_USER">Usuário</option>
+          <option value="ROLE_ADMIN">Administrador</option>
+        </select>
+        <small 
+          class="text-red-500" 
+          *ngIf="usuarioForm.get('role')?.invalid && usuarioForm.get('role')?.touched">
+          Perfil é obrigatório
+        </small>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mt-4">
+      <p-button 
+        label="Cancelar" 
+        severity="secondary"
+        (onClick)="closeDialog()"
+        [outlined]="true">
+      </p-button>
+      <p-button 
+        type="submit" 
+        label="Salvar"
+        [disabled]="usuarioForm.invalid"
+        [loading]="loading">
+      </p-button>
+    </div>
+  </form>
+</p-dialog>

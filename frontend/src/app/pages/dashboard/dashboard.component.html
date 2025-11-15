@@ -1,0 +1,91 @@
+<app-navbar></app-navbar>
+
+<div class="p-4">
+  <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
+  
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card class="stat-small">
+        <div class="flex align-items-center justify-content-between">
+          <div>
+            <div class="text-500 font-medium mb-2">Total de Insumos</div>
+            <div class="text-900 font-bold text-3xl">{{ totalInsumos }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-blue-100 border-round stat-icon" 
+               style="width:2.2rem;height:2.2rem">
+            <i class="pi pi-box text-blue-500 text-xl"></i>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card class="stat-small">
+        <div class="flex align-items-center justify-content-between">
+          <div>
+            <div class="text-500 font-medium mb-2">Insumos Críticos</div>
+            <div class="text-900 font-bold text-3xl">{{ insumosCriticos }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-orange-100 border-round stat-icon" 
+               style="width:2.2rem;height:2.2rem">
+            <i class="pi pi-exclamation-triangle text-orange-500 text-xl"></i>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card>
+        <div class="flex align-items-center justify-content-between">
+          <div>
+            <div class="text-500 font-medium mb-2">Movimentações (Mês)</div>
+            <div class="text-900 font-bold text-3xl">{{ movimentacoesMes }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-green-100 border-round" 
+               style="width:3rem;height:3rem">
+            <i class="pi pi-arrows-h text-green-500 text-xl"></i>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3">
+      <p-card>
+        <div class="flex align-items-center justify-content-between">
+          <div>
+            <div class="text-500 font-medium mb-2">Entradas (Mês)</div>
+            <div class="text-900 font-bold text-3xl">{{ entradasMes }}</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-purple-100 border-round" 
+               style="width:3rem;height:3rem">
+            <i class="pi pi-arrow-up text-purple-500 text-xl"></i>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="grid mt-4">
+    <div class="col-12 lg:col-6">
+      <p-card class="chart-small">
+        <ng-template pTemplate="header">
+          <div class="p-3">
+            <h3 class="m-0">Movimentações por Tipo</h3>
+          </div>
+        </ng-template>
+        <p-chart type="pie" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
+      </p-card>
+    </div>
+
+    <div class="col-12 lg:col-6">
+      <p-card class="chart-small">
+        <ng-template pTemplate="header">
+          <div class="p-3">
+            <h3 class="m-0">Movimentações nos Últimos 7 Dias</h3>
+          </div>
+        </ng-template>
+        <p-chart type="bar" [data]="barChartData" [options]="barChartOptions"></p-chart>
+      </p-card>
+    </div>
+  </div>
+</div>

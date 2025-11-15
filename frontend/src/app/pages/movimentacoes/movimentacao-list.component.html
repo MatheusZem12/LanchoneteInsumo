@@ -1,0 +1,121 @@
+<app-navbar></app-navbar>
+    <app-toast></app-toast>
+    <p-confirmDialog></p-confirmDialog>
+    
+    <div class="p-4">
+      <h1 class="text-3xl font-bold mb-4">Movimentações de Insumos</h1>
+      
+      <app-data-table
+        [data]="movimentacoesDisplay"
+        [columns]="columns"
+        [globalFilterFields]="['insumo_codigo', 'insumo_nome', 'tipo_movimentacao', 'data']"
+        [showAddButton]="isAdmin"
+        [showActions]="isAdmin"
+        (add)="openDialog()"
+        (edit)="openDialog($event)"
+        (delete)="confirmDelete($event)">
+      </app-data-table>
+    </div>
+
+    <p-dialog 
+      [(visible)]="displayDialog" 
+      [header]="editingMovimentacao ? 'Editar Movimentação' : 'Nova Movimentação'"
+      [modal]="true"
+      [style]="{width: '50vw'}"
+      [draggable]="false"
+      [resizable]="false">
+      
+      <form [formGroup]="movimentacaoForm" (ngSubmit)="saveMovimentacao()">
+        <div class="flex flex-column gap-3">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="insumo_id" class="font-semibold">Insumo *</label>
+            <p-select
+              inputId="insumo_id"
+              [options]="insumos"
+              formControlName="insumo_id"
+              optionLabel="nome"
+              optionValue="id"
+              placeholder="Selecione o insumo"
+              [filter]="true"
+              filterBy="codigo,nome"
+              [showClear]="true"
+              styleClass="w-full">
+              <ng-template let-insumo pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <div>{{ insumo.codigo }} - {{ insumo.nome }}</div>
+                </div>
+              </ng-template>
+            </p-select>
+            <small 
+              class="text-red-500" 
+              *ngIf="movimentacaoForm.get('insumo_id')?.invalid && movimentacaoForm.get('insumo_id')?.touched">
+              Insumo é obrigatório
+            </small>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label htmlFor="tipo_movimentacao" class="font-semibold">Tipo de Movimentação *</label>
+            <p-select
+              inputId="tipo_movimentacao"
+              [options]="tiposMovimentacao"
+              formControlName="tipo_movimentacao"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Selecione o tipo"
+              styleClass="w-full">
+            </p-select>
+            <small 
+              class="text-red-500" 
+              *ngIf="movimentacaoForm.get('tipo_movimentacao')?.invalid && movimentacaoForm.get('tipo_movimentacao')?.touched">
+              Tipo de movimentação é obrigatório
+            </small>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label htmlFor="quantidade" class="font-semibold">Quantidade *</label>
+            <p-inputNumber
+              id="quantidade"
+              formControlName="quantidade"
+              [min]="1"
+              placeholder="Digite a quantidade"
+              styleClass="w-full">
+            </p-inputNumber>
+            <small 
+              class="text-red-500" 
+              *ngIf="movimentacaoForm.get('quantidade')?.invalid && movimentacaoForm.get('quantidade')?.touched">
+              Quantidade deve ser maior que zero
+            </small>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label htmlFor="data" class="font-semibold">Data e Hora *</label>
+            <p-datePicker
+              inputId="data"
+              formControlName="data"
+              [showTime]="true"
+              [showSeconds]="false"
+              dateFormat="dd/mm/yy"
+              placeholder="Selecione a data e hora"
+              [showIcon]="true"
+              [iconDisplay]="'input'"
+              styleClass="w-full">
+            </p-datePicker>
+          </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2 mt-4">
+          <p-button 
+            label="Cancelar" 
+            severity="secondary"
+            (onClick)="closeDialog()"
+            [outlined]="true">
+          </p-button>
+          <p-button 
+            type="submit" 
+            label="Salvar"
+            [disabled]="movimentacaoForm.invalid"
+            [loading]="loading">
+          </p-button>
+        </div>
+      </form>
+    </p-dialog>

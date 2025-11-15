@@ -7,11 +7,12 @@ INSERT INTO tb_insumos (id, codigo, nome, descricao, quantidade_critica) VALUES 
 INSERT INTO tb_insumos (id, codigo, nome, descricao, quantidade_critica) VALUES (6, 'INS-006', 'Manteiga', 'Manteiga sem sal 200g', 6);
 
 -- Seeds para tb_usuarios (5 registros) - ids numéricos (Long)
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (1, 'Ana Silva', 'ana.silva@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990001');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (2, 'Bruno Costa', 'bruno.costa@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990002');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (3, 'Carla Pereira', 'carla.pereira@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990003');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (4, 'Diego Alves', 'diego.alves@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990004');
-INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (5, 'Elisa Rocha', 'elisa.rocha@example.com', '$2a$12$YIHqAnLBwoBfKgiC.U7ssOiylMqQkvpgF6rz2bR1LmV3nIOHHE.Dq', '11999990005');
+-- Senha de todos os usuários: "senha123" (criptografada com BCrypt)
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (1, 'Ana Silva', 'ana.silva@example.com', '$2a$10$MWNph/x4oUkCbfEfJCVJiexg1RQL5kcYo055HLxzqr9Y3QU5lCJBu', '11999990001');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (2, 'Bruno Costa', 'bruno.costa@example.com', '$2a$10$MWNph/x4oUkCbfEfJCVJiexg1RQL5kcYo055HLxzqr9Y3QU5lCJBu', '11999990002');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (3, 'Carla Pereira', 'carla.pereira@example.com', '$2a$10$MWNph/x4oUkCbfEfJCVJiexg1RQL5kcYo055HLxzqr9Y3QU5lCJBu', '11999990003');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (4, 'Diego Alves', 'diego.alves@example.com', '$2a$10$MWNph/x4oUkCbfEfJCVJiexg1RQL5kcYo055HLxzqr9Y3QU5lCJBu', '11999990004');
+INSERT INTO tb_usuarios (id, nome, email, senha, telefone) VALUES (5, 'Elisa Rocha', 'elisa.rocha@example.com', '$2a$10$MWNph/x4oUkCbfEfJCVJiexg1RQL5kcYo055HLxzqr9Y3QU5lCJBu', '11999990005');
 
 -- Seeds para tb_roles
 INSERT INTO tb_roles (id, nome) VALUES (1, 'ROLE_ADMIN');
@@ -45,5 +46,12 @@ INSERT INTO tb_movimentacoes_insumos (id, quantidade, tipo_movimentacao, data, u
 INSERT INTO tb_movimentacoes_insumos (id, quantidade, tipo_movimentacao, data, usuario_id, insumo_id) VALUES (18, 45, 'ENTRADA', '2025-09-18 09:05:00', 3, 6);
 INSERT INTO tb_movimentacoes_insumos (id, quantidade, tipo_movimentacao, data, usuario_id, insumo_id) VALUES (19, 3, 'SAIDA', '2025-09-19 19:30:00', 4, 6);
 INSERT INTO tb_movimentacoes_insumos (id, quantidade, tipo_movimentacao, data, usuario_id, insumo_id) VALUES (20, 7, 'SAIDA', '2025-09-20 12:10:00', 5, 1);
+
+-- Resetar sequências para evitar conflitos de ID
+ALTER TABLE tb_insumos ALTER COLUMN id RESTART WITH 7;
+ALTER TABLE tb_usuarios ALTER COLUMN id RESTART WITH 6;
+ALTER TABLE tb_roles ALTER COLUMN id RESTART WITH 3;
+ALTER TABLE tb_usuarios_roles ALTER COLUMN id RESTART WITH 6;
+ALTER TABLE tb_movimentacoes_insumos ALTER COLUMN id RESTART WITH 21;
 
 -- Fim dos seeds

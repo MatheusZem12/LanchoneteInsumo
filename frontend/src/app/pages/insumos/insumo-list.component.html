@@ -1,0 +1,103 @@
+
+    <app-navbar></app-navbar>
+    <app-toast></app-toast>
+    <p-confirmDialog></p-confirmDialog>
+    
+    <div class="p-4">
+      <h1 class="text-3xl font-bold mb-4">Insumos</h1>
+      
+      <app-data-table
+        [data]="insumos"
+        [columns]="columns"
+        [globalFilterFields]="['codigo', 'nome', 'descricao', 'quantidade_estoque']"
+        [showAddButton]="isAdmin"
+        [showActions]="isAdmin"
+        (add)="openDialog()"
+        (edit)="openDialog($event)"
+        (delete)="confirmDelete($event)">
+      </app-data-table>
+    </div>
+
+    <p-dialog 
+      [(visible)]="displayDialog" 
+      [header]="editingInsumo ? 'Editar Insumo' : 'Novo Insumo'"
+      [modal]="true"
+      [style]="{width: '50vw'}"
+      [draggable]="false"
+      [resizable]="false">
+      
+      <form [formGroup]="insumoForm" (ngSubmit)="saveInsumo()">
+        <div class="flex flex-column gap-3">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="codigo" class="font-semibold">Código *</label>
+            <input 
+              pInputText 
+              id="codigo" 
+              formControlName="codigo"
+              placeholder="Digite o código" />
+            <small 
+              class="text-red-500" 
+              *ngIf="insumoForm.get('codigo')?.invalid && insumoForm.get('codigo')?.touched">
+              Código é obrigatório
+            </small>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label htmlFor="nome" class="font-semibold">Nome *</label>
+            <input 
+              pInputText 
+              id="nome" 
+              formControlName="nome"
+              placeholder="Digite o nome" />
+            <small 
+              class="text-red-500" 
+              *ngIf="insumoForm.get('nome')?.invalid && insumoForm.get('nome')?.touched">
+              Nome é obrigatório
+            </small>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label htmlFor="descricao" class="font-semibold">Descrição</label>
+            <textarea 
+              pInputText 
+              id="descricao" 
+              formControlName="descricao"
+              placeholder="Digite a descrição"
+              rows="3"
+              class="p-inputtext">
+            </textarea>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label htmlFor="quantidade_critica" class="font-semibold">Quantidade Crítica *</label>
+            <p-inputNumber
+              id="quantidade_critica"
+              formControlName="quantidade_critica"
+              [min]="0"
+              placeholder="Digite a quantidade crítica">
+            </p-inputNumber>
+            <small 
+              class="text-red-500" 
+              *ngIf="insumoForm.get('quantidade_critica')?.invalid && insumoForm.get('quantidade_critica')?.touched">
+              Quantidade crítica é obrigatória
+            </small>
+          </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2 mt-4">
+          <p-button 
+            label="Cancelar" 
+            severity="secondary"
+            (onClick)="closeDialog()"
+            [outlined]="true">
+          </p-button>
+          <p-button 
+            type="submit" 
+            label="Salvar"
+            [disabled]="insumoForm.invalid"
+            [loading]="loading">
+          </p-button>
+        </div>
+      </form>
+    </p-dialog>
+  
